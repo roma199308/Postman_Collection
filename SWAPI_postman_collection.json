@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "4b942a0a-d246-45be-b49c-bb3b4bc856c8",
+		"name": "SWAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://swapi.co/api/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e178a8de-16d0-4ca0-87df-6036e2a59c52",
+						"exec": [
+							"//1. Проверка что ответ приходит в формате JSON",
+							"pm.test(\"Correct response format JSON\", function() {",
+							"    pm.response.to.have.jsonBody()",
+							"});",
+							"",
+							"//2. Проверка наличая всех необходимых значений,которые должны прийти  в ответе",
+							"pm.test(\"Check that we have all declared fields\", function(){",
+							"    const jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData).to.have.property(\"people1\");",
+							"    pm.expect(jsonData).to.have.property(\"planets1\");",
+							"    pm.expect(jsonData).to.have.property(\"films1\");",
+							"    pm.expect(jsonData).to.have.property(\"species1\");",
+							"    pm.expect(jsonData).to.have.property(\"vehicles1\")",
+							"    pm.expect(jsonData).to.have.property(\"starships1\")",
+							"    ",
+							"});",
+							"",
+							"//3. Проверка что в значениях не приходит NULL",
+							"pm.test(\"Check if value isn't NULL\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.people).not.equal(null);",
+							"    pm.expect(jsonData.planets).not.equal(null);",
+							"    pm.expect(jsonData.films).not.equal(null);",
+							"    pm.expect(jsonData.species).not.equal(null);",
+							"    pm.expect(jsonData.vehicles).not.equal(null);",
+							"    pm.expect(jsonData.starships).not.equal(null);",
+							"});",
+							"",
+							"//4. Проверка что значение не  приходят пустыми",
+							"pm.test(\"Check if value isn't empty\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.people).not.equal(\"\");",
+							"    pm.expect(jsonData.planets).not.equal(\"\");",
+							"    pm.expect(jsonData.films).not.equal(\"\");",
+							"    pm.expect(jsonData.species).not.equal(\"\");",
+							"    pm.expect(jsonData.vehicles).not.equal(\"\");",
+							"    pm.expect(jsonData.starships).not.equal(\"\");",
+							"});",
+							"",
+							"//5. Проверка что для определенного поля возращается ответ , который описан в требованиях",
+							"pm.test(\"Check if field corresponds to a specific value\", function(){",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.people).to.equal(\"https://swapi.co/api/people/\");",
+							"    pm.expect(jsonData.planets).to.equal(\"https://swapi.co/api/planets/\");",
+							"    pm.expect(jsonData.films).to.equal(\"https://swapi.co/api/films/\");",
+							"    pm.expect(jsonData.species).to.equal(\"https://swapi.co/api/species/\");",
+							"    pm.expect(jsonData.vehicles).to.equal(\"https://swapi.co/api/vehicles/\");",
+							"    pm.expect(jsonData.starships).to.equal(\"https://swapi.co/api/starships/\");",
+							"});",
+							"",
+							"//6. Проверка статус кода в ответе",
+							"pm.test(\"Status code is 200\", function (){",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"//7. Проверка сатуса сообщения в ответе",
+							"pm.test(\"Status massage is OK\", function(){",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"//8. Проверка, что время ответа не превышает 1000ms",
+							"pm.test(\"Response time is less than 1000ms\", function(){",
+							"    pm.expect(pm.response.responseTime).to.be.below(100);",
+							"});",
+							"",
+							"//9. Проверка, что в ответе приходит определенный заголовок",
+							"pm.test(\"There is a specific header in the responce\", function(){",
+							"    pm.response.to.have.header(\"Content-Type\")",
+							"});",
+							"",
+							"//10. Проверка, что content-type содержит определенный формат",
+							"pm.test(\"The response has a specific header with a specific value\", function(){",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/json\")",
+							"});",
+							"",
+							"//11.Проверка наличия Cookie",
+							"pm.test(\"Cookie exists\", function(){",
+							"    pm.cookies.has(\"__cfduid\")",
+							"});",
+							"",
+							"//12. Проверка значения Cookie",
+							"pm.test(\"Cookie has value\", function(){",
+							"   try{",
+							"       var MY_COOKIE = pm.cookies.get(\"__cfduid\");",
+							"       console.log(MY_COOKIE);",
+							"   }  catch(e){",
+							"       console.log(\"SOME PROBLEM WITH COKIE\" + e)",
+							"   }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swapi.co/api/",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"co"
+					],
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\" : \"Roman\"}"
+				},
+				"url": {
+					"raw": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io/ection",
+					"protocol": "https",
+					"host": [
+						"80ef4b5c-4d43-461b-b1b9-21d61b6e40ed",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"ection"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+							"protocol": "https",
+							"host": [
+								"80ef4b5c-4d43-461b-b1b9-21d61b6e40ed",
+								"mock",
+								"pstmn",
+								"io"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 22 Nov 2019 11:38:59 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=8c3d7affed3a991a"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=4872c2b4974f023f"
+						},
+						{
+							"key": "Content-Length",
+							"value": "148"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"test\",\n        \"message\": \"succes\"\n    }\n}"
+				},
+				{
+					"name": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\" : \"Roman\"}"
+						},
+						"url": {
+							"raw": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io/ection",
+							"protocol": "https",
+							"host": [
+								"80ef4b5c-4d43-461b-b1b9-21d61b6e40ed",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"ection"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 22 Nov 2019 11:42:14 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=8c3d7affed3a991a"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=4872c2b4974f023f"
+						},
+						{
+							"key": "Content-Length",
+							"value": "73"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"Roman\",\n        \"status\" : \"Created\",\n        \"message\": \"succes\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\" : \"Roman\"}"
+				},
+				"url": {
+					"raw": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io/ection",
+					"protocol": "https",
+					"host": [
+						"80ef4b5c-4d43-461b-b1b9-21d61b6e40ed",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						"ection"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\" : \"Roman\"}"
+						},
+						"url": {
+							"raw": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io/ection",
+							"protocol": "https",
+							"host": [
+								"80ef4b5c-4d43-461b-b1b9-21d61b6e40ed",
+								"mock",
+								"pstmn",
+								"io"
+							],
+							"path": [
+								"ection"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 22 Nov 2019 11:42:14 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=8c3d7affed3a991a"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=4872c2b4974f023f"
+						},
+						{
+							"key": "Content-Length",
+							"value": "73"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"Roman\",\n        \"status\" : \"Created\",\n        \"message\": \"succes\"\n    }\n}"
+				},
+				{
+					"name": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://80ef4b5c-4d43-461b-b1b9-21d61b6e40ed.mock.pstmn.io",
+							"protocol": "https",
+							"host": [
+								"80ef4b5c-4d43-461b-b1b9-21d61b6e40ed",
+								"mock",
+								"pstmn",
+								"io"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 22 Nov 2019 11:38:59 GMT"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"af-GpPmRW0ySclCbQDmlVYDXw7rYA4\""
+						},
+						{
+							"key": "Server",
+							"value": "nginx"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-srv-span",
+							"value": "v=1;s=8c3d7affed3a991a"
+						},
+						{
+							"key": "x-srv-trace",
+							"value": "v=1;t=4872c2b4974f023f"
+						},
+						{
+							"key": "Content-Length",
+							"value": "148"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": {\n        \"name\": \"test\",\n        \"message\": \"succes\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"protocolProfileBehavior": {}
+}
